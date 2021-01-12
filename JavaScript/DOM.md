@@ -26,8 +26,6 @@
     + ```ChildNode.remove()```: 将当前子节点从父节点中移除;
     ... ...
 
-+ ```Attr```
-
 + ```Event```
 
 + ```EventTarget```
@@ -41,3 +39,13 @@
 + ```URL```
 
 + ```Worker```
+
+## ```Node```节点类型
+
+### 元素节点```Element```
+
+#### ```HTMLElement```
+
+#### ```SVGElement```
+
+### 文本节点```Text```
