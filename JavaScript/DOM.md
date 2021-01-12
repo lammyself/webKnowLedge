@@ -26,7 +26,10 @@
     + ```ChildNode.remove()```: 将当前子节点从父节点中移除;
     ... ...
 
-+ ```Event```
++ ```Event```: 事件;
+
+  某些行为会触发事件, 事件被触发后可以使用```Event```接口中的方法进行监听.如: ```EventTarget.addEventListener()```... ... ;
+  [Event](./Event.md)
 
 + ```EventTarget```
 
