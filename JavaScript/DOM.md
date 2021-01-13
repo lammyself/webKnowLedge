@@ -1,6 +1,7 @@
 # DOM
 
-```DOM```(```Document Object Model```): 文档对象模型, 保存了文档树节点的信息.浏览器允许```JavaScript```通过```DOM```对象上的接口(属性和方法)操作文档树节点、获取文档节点信息,或者注册事件.
+```DOM```(```Document Object Model```): 文档对象模型, 保存了文档树节点的信息.浏览器允许```JavaScript```通过```DOM```对象上的接口(属性和方法)操作文档树节点、获取文档节点信息,或者注册事件.  
+属于```BOM```接口的一类;
 
 [DOM接口](https://developer.mozilla.org/zh-CN/docs/Web/API/Document_Object_Model)
 
