@@ -28,27 +28,41 @@
 
 + ```Event```: 事件;
 
-  某些行为会触发事件, 事件被触发后可以使用```Event```接口中的方法进行监听.如: ```EventTarget.addEventListener()```... ... ;
+  某些行为会触发事件, 事件被触发后可以使用```Event```接口中的方法进行监听.如: ```EventTarget.addEventListener()```... ... ;  
   [Event](./Event.md)
 
-+ ```EventTarget```
++ ```EventTarget```:是一个 DOM 接口，由可以接收事件、并且可以创建侦听器的对象实现;
+  通常是指一个```ElementNode```(元素节点);
+  也可使用```EventTarget```构造函数创建;
 
-+ ```MutationObserver```
++ ```MutationObserver```: 接口提供了监视对```DOM```树所做更改的能力。它被设计为旧的```Mutation Events```功能的替代品，该功能是```DOM3 Events```规范的一部分。
 
-+ ```MutationRecord```
+  + ```MutationRecord```: 代表一个独立的 ```DOM``` 变化，在每次随 ```DOM``` 变化调用 MutationObserver 的回调函数时，一个相应的 ```MutationRecord``` 会被作为参数，传递给回调函数。
 
-+ ```NodeIterator```
++ ```NodeIterator```: 元素迭代器, 遍历当前```DOM```节点的所有子节点的迭代器;
 
-+ ```URL```
+  通过```document.createNodeIterator()```方法创建;
 
-+ ```Worker```
++ ```URL```: 接口用于解析，构造，规范化和编码 ```URL```;
+
++ ```Worker```: ```Worker``` 接口是 ```Web Workers API``` 的一部分，指的是一种可由脚本创建的后台任务，任务执行中可以向其创建者收发信息。
 
 ## ```Node```节点类型
 
 ### 元素节点```Element```
 
-#### ```HTMLElement```
++ #### HTML元素节点```HTMLElement```
 
-#### ```SVGElement```
+  所有的```HTML```元素节点;
+
++ #### SVG元素节点```SVGElement```
+
+  所有的```SVG```元素;
+
+### 属性节点```Attr```
+
+元素的属性,可以通过```Element.getAttributeNode()```或者元素迭代器```NodeIterator```获取属性节点;
 
 ### 文本节点```Text```
+
+所有元素或属性的文本内容,可以通过```Text()```构造函数创建一个```Text```对象;
