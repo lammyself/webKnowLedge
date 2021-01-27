@@ -179,8 +179,37 @@
   + [```console```的方法支持```printf```的```占位符```格式](https://juejin.cn/post/6844904023183769607)
 
 + ```History```: 历史记录;
-+ ```Location```
-+ ```WebGL```
+  + ```back()```: 回退方法;
+  + ```forward()```: 前进方法;
+  + ```go()```: 跳转到```history```中指定的点;
+  + ```pushState()```: 在当前窗口添加一条历史记录, 但是浏览器不会重新加载页面;
+  + ```replaceState()```: 修改当前窗口的当前历史记录, 会在全局浏览器历史记录中添加一个新的记录;
+  + ```popState Event```: 当活动的历史记录发生改变时会发生触发这个```事件```;
++ ```Location```: 表示这个窗口链接的```URL```;  
+  可以通过```window.location```与```document.location```获取;
+  + ```href```: 链接的整个URL;
+  + ```protocol```: 链接对应的协议, 最后有个`:`;
+  + ```host```: 访问链接, 包括端口号,以及域名或IP;
+  + ```hostname```: 访问链接, 只有域名或者IP;
+  + ```port```: 链接的端口号;
+  + ```pathname```: 链接的路径部分, 以`/`开头;
+  + ```search```: 链接的参数, 以`?`开头;
+  + ```hash```: 链接的```hash```值, 以`#`开头;
+  + ```origin```: 链接的域名的标准形式, 包括协议,域名或IP, 端口号;
+  + ```assign()```: 跳转;
+  + ```reload()```: 刷新;
+  + ```replace()```: 重定向;
+  + ```toString()```: 返回一个值,与```href```相同;
++ ```Navigator```: 保存了一些浏览器的信息;
+  + ```battery```: 可以用来获取一些电池充电状态的信息.
+  + ```connection```: 可以用来获取设备的连接信息, 如: 蓝牙, wifi等.
+  + ```cookieEnabled```: 忽略`cookie`时返回`false`,否则返回`true`.
+  + ```javaEnabled```: 表明浏览器是否支持`Java`.
+  + ```language```: 返回用户首选语言;
+  + ```oscpu``` 或 ```platform```: 返回操作系统名;
+  + ```plugins```: 返回浏览器安装的插件列表;
+  + ```storage```: 用于访问当前网站或应用程序的浏览器整体存储功能.
++ ```WebGL```: 可在任何兼容的Web浏览器中渲染高性能的交互式3D和2D图形;
 + ```OffscreenCanvas```: 提供了一个可以脱离屏幕渲染的```canvas```对象,它在窗口环境和```web worker```环境均有效.**实验中的功能**
 + ```OfflineAudioContext```: 不在硬件设备渲染音频;相反,它尽可能快地生成音频,输出一个 ```AudioBuffer``` 作为结果.
 + ```WaveShaperNode```: 表示一个非线性的畸变器, 是一个使用曲线来将一个波形畸变应用到一个声音信号中的```AudioNode```. 除了明显的失真效果之外, 它通常用来给信号添加一个暖调的感觉.
@@ -188,15 +217,8 @@
 + ```Screen```: 表示一个屏幕窗口, 往往指的是当前正在被渲染的```window```对象, 可以使用 ```window.screen``` 获取它.
 + ```ScrollToOptions```: 元素或```window```滚动对象,可以获取当前滚动位置或者设置滚动到某个位置;
 + 数据缓存```Storage```
-  + ```sessionStorage```
-  + ```localStorage```
-  + ```History.pushState()```
-  + ```IndexDB```: 用于存储大量的结构化数据, 存储大量数据的方法还有```webSQL```;
-  + ```cache```: 缓存请求及响应数据;
-+ ```CSS```
-+ ```Blob```
-+ ```File```
-+ ```Navigator```: 保存了一些浏览器的信息;
++ ```Blob```: 表示一个不可变、原始数据的类文件对象.
++ ```File```: 提供文件相关的信息,并允许JavaScript访问;
 + ```PublicKeyCredential```: 网络加密, 仅支持```HTTPS```协议;
 + 硬件:
   + 蓝牙
