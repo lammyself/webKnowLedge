@@ -35,6 +35,25 @@ A(调用构造函数) --> E(返回的值不是对象) --> G(返回this对象作�
 
 + 怎样实现一个new
 
+实现一个`new`就是把`new`做的事做一遍,如:
+
+```javaScript
+  /**
+   * 因为new是一个关键字,而js不能创建关键字.所以,通过函数的方式创建;
+   * 并且
+   */
+  const createObj = function (cur, ...arg) {
+    const obj = {}; // 创建一个空对象
+    obj.__proto__ = cur.prototype; // 将空对象的原型指向构造函数的prototype
+    const result = cur.apply(obj, arg); // 将创建的对象和this绑定,并调用构造函数
+    if(typeof result === "object" || typeof result === "function") {// 判断构造函数返回值
+      return result; // 如果是对象,就返回这个对象作为结果
+    }else {
+      return obj; // 如果不是对象, 返回this作为结果.因为this指向了obj,所以返回obj;
+    }
+  }
+```
+
 + 构造函数
 
 + class
