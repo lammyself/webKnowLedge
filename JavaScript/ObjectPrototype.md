@@ -56,8 +56,47 @@ A(调用构造函数) --> E(返回的值不是对象) --> G(返回this对象作�
 
 + 构造函数
 
-+ class
+指使用`new`关键字创建对象的函数;
+通常构造函数命名使用大驼峰命名,即所有单词首字母大写.
+`ES6`中推出了构造函数的语法糖`class`;
 
-+ 使用 new的方式
++ class
+  [MDN](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/class)上`class`的定义: `class` 声明创建一个基于原型继承的具有给定名称的新类.
+  然而`class`只是创建了一个函数, 比如我们可以使用全等运算符判断一个`class`的原型`__proto__`是否与`Function.prototype`相等.
+  用法示例:  
+
+```JavaScript
+const People = class Person { // class关键字后面的Person会成为当前类的名字,可以通过在class内部通过People.name或Person.name调用.
+  // 当没有将class赋值给一个变量的时候, class会将name的值作为变量名.如果赋值给一个变量后,只能通过这个变量获取当前class;
+  constructor(...args) { // 构造函数, 如果没有显式声明js会自动给这个类添加一个空的构造函数
+    console.log(People.name);
+  }
+  test() { // 构造函数外声明的属性和方法会被挂载到原型上
+    console.log("pass");
+  }
+  static ex() { // 静态方法,可以直接通过类来调用.this指向class本身,不会被实例对象继承, 但是可以被子类继承.
+    console.log(this);
+  }
+  static text = "text";
+  getName() {
+    return Person.name;
+  }
+  get age() { // 访问age属性时,会获取这个方法的返回值;
+    return "18";
+  }
+  set age(val) { // 修改age属性时可以通过这个方法的第一个参数获取要修改的值;
+    console.log(val);
+  }
+}
+console.log(People.text);
+class Man extends People { // class 可以使用 extends实现继承
+  constructor() {
+    this.sex = "男人";
+    // 通过super可以访问到父类,包括父类的静态方法;
+    console.log(super.age);
+    super.ex();
+  }
+}
+```
 
 ## 继承
