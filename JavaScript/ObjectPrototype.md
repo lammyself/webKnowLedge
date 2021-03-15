@@ -100,3 +100,124 @@ class Man extends People { // class 可以使用 extends实现继承
 ```
 
 ## 继承
+
+父类构造函数:
+
+```JavaScript
+function Parent(name) {
+  this.sex = "男";
+  this.info = {
+      job: "PE",
+      age: 35,
+      name
+  };
+};
+Parent.prototype.recommend = function() {
+  console.log(this.sex, this.info);
+};
+```
+
++ 原型链继承:
+  + 优点: 父类方法可以共用;
+  + 缺点: 父类引用类型的属性会被共享, 子类示例也不能给父类传参;
+
+```JavaScript
+function Child (){};
+Child.prototype = new Parent();
+```
+
+将父类挂载到子类的原型链上
+
++ 构造函数继承
+  + 优点: 可以在子类中向父类构造函数传参, 父类的引用类型不会被子类共享;
+  + 缺点: 子类不能访问父类的原型;  
+
+```JavaScript
+function Child(name) {
+  Parent.call(this, name)
+};
+```
+
+使用`call`或者`apply`方法更改父类构造函数中`this`指向为子类实例;
+
++ 组合继承
+  + 优点:  
+    + 父类的方法啊可以复用;
+    + 可以在子类上向父类传参;
+    + 构造函数中的引用类型不会被共享;
+  + 缺点:  
+    + 父类构造函数被调用两次;
+    + 父类原型上的引用类型会被共享;
+
+```JavaScript
+function Child(name) {
+  Parent.call(this, name)
+};
+Child.prototype = new Parent();
+```
+
+将原型链和构造函数继承的优点结合起来;
+
++ 寄生式继承:  
+  + 优点: 不调用父类构造函数,父类原型上的方法可以共享;
+  + 缺点: 无法继承构造函数内属性;
+
+```JavaScript
+function inheritPrototype(child, parent) {
+  let prototype = Object.create(parent.prototype); 
+  prototype.constructor = child;
+  Child.prototype = prototype;
+}
+function Child(name) {
+  this.info = {
+    job: "student",
+    age: 18,
+    name
+  };
+};
+inheritPrototype(Child, Parent);
+```
+
+在将父类的原型赋值给一个空对象的原型,并将这个对象赋值给`Child`的原型;
+
++ 寄生式组合继承: 终极解决方案;
+
+```JavaScript
+function inheritPrototype(child, parent) {
+  let prototype = Object.create(parent.prototype); 
+  prototype.constructor = child;
+  Child.prototype = prototype;
+};
+function Child(name) {
+  Parent.call(this, name);
+};
+inheritPrototype(Child, Parent);
+```
+
+寄生式继承结合构造函数继承, 将两者优点结合;
+
++ `class`继承语法糖
+通过`extends`关键字可以实现`class`的继承;
+
+```JavaScript
+class Parent {
+  this.sex = "男";
+  this.info = {
+      job: "PE",
+      age: 35,
+      name
+  };
+};
+Parent.prototype.recommend = function() {
+  console.log(this.sex, this.info);
+};
+class Child extends Parent {
+  this.info = {
+    job: "student",
+    age: 18,
+    name
+  };
+}
+```
+
+`extends`实现继承效果与寄生组合式继承类似;
