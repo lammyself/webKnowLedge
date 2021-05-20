@@ -93,7 +93,7 @@
 ### 渲染阶段
 
 + 构建DOM树: 浏览器无法直接理解使用`HTML`,所以需要将`HTML`转为浏览器能直接理解的`DOM树`.
-  + **HTML 解析器（HTMLParser）**: 它的职责就是负责将 HTML 字节流转换为 DOM 结构, 会默认创建了一个根为 document 的空 DOM 结构;
+  + **HTML 解析器（HTMLParser）**: 它的职责就是负责将 HTML 字节流转换为 DOM 结构, 会默认创建了一个 document节点 的空 DOM 结构作为根节点;
   + HTML 解析器并不是等整个文档加载完成之后再解析的，而是网络进程加载了多少数据，HTML 解析器便解析多少数据。
   + JavaScript加载:
     JavaScript加载和执行都会影响`DOM`的渲染, 可以使用`async` 和 `defer`使`js`文件异步加载;
@@ -103,8 +103,6 @@
     > 这里要注意是DOMContentLoaded事件不是load事件，也就是DOM解析完成（并不是所有资源都加载完成）触发DOMContentLoaded事件。
     \
     > 而 JavaScript 引擎在解析 JavaScript 之前，是不知道 JavaScript 是否操纵了 CSSOM 的，所以渲染引擎在遇到 JavaScript 脚本时，不管该脚本是否操纵了 CSSOM，都会执行 CSS 文件下载，解析操作，再执行 JavaScript 脚本。
-
-    因为`async`是加载完成后立即执行,所以执行时还是会阻塞`DOM`渲染;
 
   + 构建流程:
     + 网络进程收到响应头,根据`content-type`判断文件类型.如果是`text/html`,那么浏览器就会判断这是一个HTML类型的文件;
