@@ -73,6 +73,90 @@
 
 `vm.$off`可以根据传参的不同移除不同的事件监听或者清空所有事件;
 
+## use
+
+`Vue.use`用于注册安装vue插件, 如果插件是一个对象, 那么它必须提供`install`方法.如果插件是一个函数,那么它自己会被视为`install`方法.
+调用`install`方法时,会将`Vue`作为参数传入.
+多次调用`install`, 插件也只会安装一次.
+
+## mixin
+
+`Vue.mixin`方法注册后会影响创建的每个`vue`实例, 因为这个方法会更改`vue.options`.
+会将用户传入的对象和`vue.options`混合到一起, 然后用混合后的对象代替`vue.options`.
+
 ## 生命周期函数
 
 生命周期钩子函数是在`vue`运行过程中不同阶段被`callHook`函数调用的`vue`实例上的方法.
+
+`vue.mixin`和`new Vue()`都可以设置生命周期钩子, 所以同名的生命周期钩子函数会被放入一个数组中;
+`callHook`函数接受两个参数`vue`组件实例和钩子函数名, 然后`callHook`内部会遍历调用生命周期.
+
+## vuex
+
+> Vuex实现了一个单向数据流，在全局拥有一个State存放数据，所有修改State的操作必须通过Mutation进行，Mutation的同时提供了订阅者模式供外部插件调用获取State数据的更新。所有异步接口需要走Action，常见于调用后端接口异步获取更新数据，而Action也是无法直接修改State的，还是需要通过Mutation来修改State的数据。最后，根据State的变化，渲染到视图上。Vuex运行依赖Vue内部数据双向绑定机制，需要new一个Vue对象来实现“响应式化”，所以Vuex是一个专门为Vue.js设计的状态管理库。
+
+`vuex`被注册时`install`方法会通过`vue.mixin`将`vuexInit`混入进`beforeCreate`钩子函数中执行;
+
+`vuexInit`会尝试从`option`中获取`vuex`实例`store`.
+如果当前组件是根节点,则`options`中会存在`store`,可以直接获取赋值给`$store`.
+如果当前组件不是根组件, 会通过`options`中的`parent`获取父组件`$store`的引用.
+这样所有组件都会获取到一份相同的`store`的引用;
+`vuex`数据更新借助了`vue`的响应式`data`来实现的, 设计思路与`event bus`类似.
+
+## Vue router
+
++ install:
+`VueRouter`注册时会通过`install`方法会通过`vue.mixin`在Vue实例的`beforeCreate`中初始化.
+
+```javaScript
+export function install (Vue) {
+ // ...
+  // 混入 beforeCreate 钩子
+  Vue.mixin({
+    beforeCreate () {
+      // 在option上面存在router则代表是根组件 
+      if (isDef(this.$options.router)) {
+        this._routerRoot = this
+        this._router = this.$options.router
+        // 执行_router实例的 init 方法
+        this._router.init(this)
+        // 为 vue 实例定义数据劫持
+        Vue.util.defineReactive(this, '_route', this._router.history.current)
+      } else {
+        // 非根组件则直接从父组件中获取
+        this._routerRoot = (this.$parent && this.$parent._routerRoot) || this
+      }
+      registerInstance(this, this)
+    },
+    destroyed () {
+      registerInstance(this)
+    }
+  })
+ 
+  // 设置代理，当访问 this.$router 的时候，代理到 this._routerRoot._router
+  Object.defineProperty(Vue.prototype, '$router', {
+    get () { return this._routerRoot._router }
+  })
+  // 设置代理，当访问 this.$route 的时候，代理到 this._routerRoot._route
+  Object.defineProperty(Vue.prototype, '$route', {
+    get () { return this._routerRoot._route }
+  })
+ 
+  // 注册 router-view 和 router-link 组件
+  Vue.component('RouterView', View)
+  Vue.component('RouterLink', Link)
+
+  // Vue钩子合并策略
+  const strats = Vue.config.optionMergeStrategies
+  // use the same hook merging strategy for route hooks
+  strats.beforeRouteEnter = strats.beforeRouteLeave = strats.beforeRouteUpdate = strats.created
+  // ...
+}
+```
+
++ 路由实现:
+  主要是通过事件监听来获取路由的变化.
+  + hash: 通过监听`hashchange`事件获取路由变化.
+  + history: 通过监听`popstate`事件获取路由变化.
+  其中`history`模式的路由更改是通过`history.replaceState()`和`history.pushState`来实现的,而`hash`模式则是通过`hash`值变化不触发浏览器更新来实现的.
+  
