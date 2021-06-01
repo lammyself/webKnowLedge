@@ -162,7 +162,7 @@
   + 将内存显示到屏幕上;
 + 渲染结束;
 
-`内联js与css的渲染流程`
+`外联css的渲染流程`
 ![img](./img/drawingruning_in.png)
 `外联js与css的渲染流程`
 ![img](./img/drawingruning_out.png)
@@ -217,6 +217,7 @@
     + 词法环境: 保存了块级作用域中的变量`const与let声明的变量`;
     + this: 指向调用者;
     + Outer: 上层执行上下文的指针;
++ 代码空间: 用来执行代码;
 
 ### 垃圾回收
 
