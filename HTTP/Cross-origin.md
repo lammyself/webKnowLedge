@@ -12,10 +12,10 @@
 ## 解决跨域的方法
 
 1. **CORS**: 跨域资源共享(**CORS**) 是一种机制，它使用额外的 `HTTP` 头来告诉浏览器允许接收的响应类型:
-    1. **Access-Control-Allow-Origin**: 允许接收的域名;
-    2. **Access-Control-Allow-Credentials**: 允许请求携带`Cookie`;
-    3. **Access-Control-Request-Method**: 允许的请求方法;
-    4. **Access-Control-Allow-Headers**: 允许的自定义请求头;
+    1. **Access-Control-Allow-Origin**: 响应头: 允许接收的域名;
+    2. **Access-Control-Allow-Credentials**: 请求头: 允许请求携带`Cookie`;
+    3. **Access-Control-Request-Method**: 响应头: 允许的请求方法;
+    4. **Access-Control-Allow-Headers**: 响应头: 允许的自定义请求头;
 使用**CORS**来解决跨域问题还需要注意请求类型:
 
     + **简单请求**: 不会触发 `CORS` 预检请求:请求前不会发送`(OPTINS)`。
